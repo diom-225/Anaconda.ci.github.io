@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PATRON — Développeur & Fondateur d'Anaconda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A1628;
+    --navy-mid: #112240;
+    --navy-light: #1E3A5F;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --white: #F5F7FA;
+    --grey: #8892A4;
+    --accent: #2E86DE;
+    --card-bg: rgba(17, 34, 64, 0.85);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--navy);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── BACKGROUND TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(46,134,222,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(201,168,76,0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 6%;
+    background: rgba(10,22,40,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--grey);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 6%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content { max-width: 780px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.2rem;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-name span {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--gold);
+  }
+
+  .hero-tagline {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--grey);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.85rem 2rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    border: 1.5px solid rgba(201,168,76,0.5);
+    color: var(--gold);
+    padding: 0.85rem 2rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: border-color 0.3s, background 0.3s, transform 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--grey);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 2s infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 7rem 6%;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 3rem;
+  }
+
+  /* ─── ABOUT ─── */
+  #about .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--grey);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong { color: var(--white); }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    padding: 1.8rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .stat-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--grey);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── ANACONDA PROJECT ─── */
+  #anaconda {
+    background: rgba(17, 34, 64, 0.4);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .anaconda-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .project-badge-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    background: rgba(46,134,222,0.15);
+    border: 1px solid rgba(46,134,222,0.3);
+    color: #7EC8E3;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+  }
+
+  .tag.gold {
+    background: rgba(201,168,76,0.12);
+    border-color: rgba(201,168,76,0.35);
+    color: var(--gold);
+  }
+
+  .anaconda-logo-block {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 2rem 3rem;
+    text-align: center;
+    min-width: 200px;
+  }
+
+  .anaconda-logo-icon {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .anaconda-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .anaconda-logo-sub {
+    font-size: 0.75rem;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .feature-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-4px);
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: var(--white);
+  }
+
+  .feature-desc {
+    font-size: 0.88rem;
+    color: var(--grey);
+    line-height: 1.6;
+  }
+
+  .operators-section { margin-top: 3rem; }
+
+  .operators-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 1.5rem;
+  }
+
+  .operators-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .operator-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .operator-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-3px);
+  }
+
+  .operator-emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+
+  .operator-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .tech-stack {
+    margin-top: 4rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .tech-pill {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--white);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .tech-pill:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 2rem;
+  }
+
+  .skill-cat-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-item {
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+
+  .skill-name { font-size: 0.88rem; color: var(--white); }
+  .skill-pct { font-size: 0.78rem; color: var(--grey); }
+
+  .skill-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--accent), var(--gold));
+    border-radius: 2px;
+    transform-origin: left;
+    animation: skillGrow 1s ease both;
+    animation-play-state: paused;
+  }
+
+  .skill-fill.animated { animation-play-state: running; }
+
+  @keyframes skillGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* ─── CONTACT ─── */
+  #contact .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-info p {
+    color: var(--grey);
+    margin-bottom: 2rem;
+  }
+
+  .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-item:hover { color: var(--gold); }
+
+  .contact-icon {
+    width: 42px; height: 42px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .contact-item:hover .contact-icon {
+    background: rgba(201,168,76,0.2);
+    border-color: var(--gold);
+  }
+
+  .contact-text-label { font-size: 0.72rem; color: var(--grey); letter-spacing: 0.08em; text-transform: uppercase; }
+  .contact-text-value { font-size: 0.92rem; font-weight: 500; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .form-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); }
+
+  .form-input, .form-textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    transition: border-color 0.3s;
+    outline: none;
+    resize: none;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-textarea { min-height: 120px; }
+
+  .form-submit {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    align-self: flex-start;
+  }
+
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 2.5rem 6%;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--grey);
+  }
+
+  .footer-socials { display: flex; gap: 1rem; }
+
+  .social-link {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1rem;
+    color: var(--grey);
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+  }
+
+  .social-link:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 4%; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 5rem 4%; }
+    #about .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .anaconda-header { flex-direction: column; }
+    .operators-grid { grid-template-columns: repeat(2, 1fr); }
+    #contact .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">PATRON</a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#anaconda">Anaconda</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Développeur & Fondateur — Côte d'Ivoire</div>
+    <h1 class="hero-name">
+      Je construis<br>
+      l'avenir <span>financier</span><br>
+      de l'Afrique.
+    </h1>
+    <p class="hero-tagline">
+      Développeur full-stack passionné par la fintech et l'inclusion financière.
+      Créateur d'<strong>Anaconda</strong>, l'application mobile money
+      conçue pour le marché ivoirien.
+    </p>
+    <div class="hero-ctas">
+      <a href="#anaconda" class="btn-primary">Voir Anaconda →</a>
+      <a href="#contact" class="btn-outline">Me contacter</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <div class="section-label">Qui suis-je</div>
+    <h2 class="section-title">À propos de moi</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        Je suis un développeur full-stack basé à <strong>Abidjan, Côte d'Ivoire</strong>,
+        spécialisé dans la construction de solutions fintech adaptées aux réalités
+        du marché africain.
+      </p>
+      <p>
+        Passionné par l'<strong>inclusion financière</strong> et l'innovation technologique,
+        j'ai fondé le projet Anaconda pour répondre à un besoin concret : permettre aux
+        Ivoiriens de gérer leurs transferts d'argent mobile depuis une seule interface
+        unifiée, simple et sécurisée.
+      </p>
+      <p>
+        Mon approche combine <strong>rigueur technique</strong>, conformité réglementaire
+        (BCEAO/UEMOA) et expérience utilisateur soignée — pour créer des produits prêts
+        pour un déploiement réel.
+      </p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <span class="stat-number">4</span>
+        <span class="stat-label">Opérateurs intégrés</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Conforme BCEAO</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">KYC</span>
+        <span class="stat-label">AML / FATF</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">API</span>
+        <span class="stat-label">REST sécurisée</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANACONDA -->
+<section id="anaconda">
+  <div class="reveal">
+    <div class="section-label">Projet Phare</div>
+    <h2 class="section-title">Anaconda</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="anaconda-header reveal">
+    <div>
+      <p style="color: var(--grey); max-width: 560px; margin-bottom: 1.5rem;">
+        Application mobile money unifiée pour le marché ivoirien — une plateforme
+        unique pour gérer tous vos portefeuilles d'argent mobile en toute sécurité.
+      </p>
+      <div class="project-badge-row">
+        <span class="tag gold">Fintech</span>
+        <span class="tag">Mobile Money</span>
+        <span class="tag">Côte d'Ivoire</span>
+        <span class="tag">BCEAO</span>
+        <span class="tag">En développement</span>
+      </div>
+    </div>
+    <div class="anaconda-logo-block">
+      <span class="anaconda-logo-icon">🐍</span>
+      <div class="anaconda-logo-text">Anaconda</div>
+      <div class="anaconda-logo-sub">Mobile Money</div>
+    </div>
+  </div>
+
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <span class="feature-icon">🔗</span>
+      <div class="feature-title">Interface Unifiée</div>
+      <p class="feature-desc">
+        Connectez MTN MoMo, Orange Money, Moov Money et Wave dans une
+        seule application. Gérez tous vos portefeuilles sans changer d'app.
+      </p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔒</span>
+      <div class="feature-title">Sécurité Avancée</div>
+      <p class="feature-desc">
+        Authentification JWT, chiffrement des données, conformité KYC/AML
+        et respect des directives FATF pour une sécurité de niveau bancaire.
+      </p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-title">Transferts Instantanés</div>
+      <p class="feature-desc">
+        Gateway de paiement simulé avec traitement en temps réel.
+        Architecture Node.js backend optimisée pour la performance.
+      </p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📱</span>
+      <div class="feature-title">UX Mobile First</div>
+      <p class="feature-desc">
+        Interface épurée blanc/bleu/dark blue, persistance IndexedDB
+        et expérience utilisateur pensée pour le marché ivoirien.
+      </p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📋</span>
+      <div class="feature-title">Dossier Réglementaire</div>
+      <p class="feature-desc">
+        Dossier technique complet préparé pour soumission aux opérateurs MNO,
+        couvrant BCEAO, UEMOA et intégration API.
+      </p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌍</span>
+      <div class="feature-title">Marché Local</div>
+      <p class="feature-desc">
+        Conçu spécifiquement pour la réalité ivoirienne — infrastructures,
+        habitudes financières et besoins des utilisateurs locaux.
+      </p>
+    </div>
+  </div>
+
+  <div class="operators-section reveal">
+    <div class="operators-title">Opérateurs intégrés</div>
+    <div class="operators-grid">
+      <div class="operator-card">
+        <span class="operator-emoji">🟡</span>
+        <div class="operator-name">MTN MoMo</div>
+      </div>
+      <div class="operator-card">
+        <span class="operator-emoji">🟠</span>
+        <div class="operator-name">Orange Money</div>
+      </div>
+      <div class="operator-card">
+        <span class="operator-emoji">🔵</span>
+        <div class="operator-name">Moov Money</div>
+      </div>
+      <div class="operator-card">
+        <span class="operator-emoji">🌊</span>
+        <div class="operator-name">Wave</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-stack reveal">
+    <div class="operators-title">Stack Technique</div>
+    <div class="tech-grid">
+      <span class="tech-pill">Node.js</span>
+      <span class="tech-pill">Express.js</span>
+      <span class="tech-pill">JWT Auth</span>
+      <span class="tech-pill">IndexedDB</span>
+      <span class="tech-pill">REST API</span>
+      <span class="tech-pill">HTML5 / CSS3</span>
+      <span class="tech-pill">JavaScript ES6+</span>
+      <span class="tech-pill">KYC / AML</span>
+      <span class="tech-pill">BCEAO Compliance</span>
+      <span class="tech-pill">Payment Gateway</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <div class="section-label">Expertise</div>
+    <h2 class="section-title">Compétences</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-category">
+      <div class="skill-cat-title">Frontend</div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">HTML / CSS</span><span class="skill-pct">92%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">JavaScript</span><span class="skill-pct">85%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">UI/UX Design</span><span class="skill-pct">78%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">Responsive Design</span><span class="skill-pct">88%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Backend</div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">Node.js</span><span class="skill-pct">82%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">API REST</span><span class="skill-pct">86%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:86%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">Authentification JWT</span><span class="skill-pct">80%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">Bases de données</span><span class="skill-pct">72%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-title">Fintech & Réglementaire</div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">Conformité BCEAO</span><span class="skill-pct">88%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">KYC / AML</span><span class="skill-pct">84%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:84%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">Mobile Money API</span><span class="skill-pct">79%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:79%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-header"><span class="skill-name">Architecture Fintech</span><span class="skill-pct">77%</span></div>
+        <div class="skill-bar"><div class="skill-fill" style="width:77%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <div class="section-label">Parlons</div>
+    <h2 class="section-title">Me contacter</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <p>
+        Vous êtes investisseur, opérateur MNO, partenaire technologique
+        ou simplement curieux du projet Anaconda ? N'hésitez pas à me contacter.
+      </p>
+      <div class="contact-items">
+        <a href="mailto:votre@email.com" class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-text-label">Email</div>
+            <div class="contact-text-value">votre@email.com</div>
+          </div>
+        </a>
+        <a href="#" class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-text-label">Localisation</div>
+            <div class="contact-text-value">Abidjan, Côte d'Ivoire</div>
+          </div>
+        </a>
+        <a href="https://github.com/votre-username" target="_blank" class="contact-item">
+          <div class="contact-icon">🐙</div>
+          <div>
+            <div class="contact-text-label">GitHub</div>
+            <div class="contact-text-value">github.com/votre-username</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/votre-profil" target="_blank" class="contact-item">
+          <div class="contact-icon">💼</div>
+          <div>
+            <div class="contact-text-label">LinkedIn</div>
+            <div class="contact-text-value">linkedin.com/in/votre-profil</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-group">
+        <label class="form-label">Nom</label>
+        <input type="text" class="form-input" placeholder="Votre nom">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sujet</label>
+        <input type="text" class="form-input" placeholder="Partenariat, investissement, collaboration...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Votre message..."></textarea>
+      </div>
+      <button class="form-submit" onclick="alert('Message envoyé ! Merci.')">Envoyer →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 PATRON — Tous droits réservés. Abidjan, Côte d'Ivoire.</div>
+  <div class="footer-socials">
+    <a href="https://github.com/votre-username" target="_blank" class="social-link" title="GitHub">🐙</a>
+    <a href="https://linkedin.com/in/votre-profil" target="_blank" class="social-link" title="LinkedIn">💼</a>
+    <a href="mailto:votre@email.com" class="social-link" title="Email">✉️</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Animate skill bars
+        e.target.querySelectorAll('.skill-fill').forEach((bar, i) => {
+          setTimeout(() => bar.classList.add('animated'), i * 100);
+        });
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Navbar active on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>
